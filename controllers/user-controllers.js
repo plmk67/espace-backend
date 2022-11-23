@@ -119,12 +119,12 @@ const authenticateHeaderToken = async (req, res, next) => {
     ? jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         //verify if token is correct
         if (err) {
-          res.sendStatus(403).json({ error: "error" });
+          res.send(403).json({ error: "error" });
         } else {
           next();
         }
       })
-    : res.sendStatus(401).json({ error: "no token" });
+    : res.send(401).json({ error: "no token" });
 };
 
 function generateAccessToken(id) {

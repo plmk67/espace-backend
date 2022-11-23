@@ -65,20 +65,20 @@ const getPlaces = async (req, res, next) => {
   try {
     places = await Place.find();
 
-    if (endIndex < places.length) {
-      results.next = {
-        page: page + 1,
-        limit: limit,
-      };
-    }
+    // if (endIndex < places.length) {
+    //   results.next = {
+    //     page: page + 1,
+    //     limit: limit,
+    //   };
+    // }
 
-    if (startIndex > 0) {
-      results.prev = {
-        page: page - 1,
-        limit: limit,
-      };
-    }
-    results.results = places.slice(startIndex, endIndex);
+    // if (startIndex > 0) {
+    //   results.prev = {
+    //     page: page - 1,
+    //     limit: limit,
+    //   };
+    // }
+    // results.results = places.slice(startIndex, endIndex);
   } catch (err) {
     const error = new HttpError(
       "Could not find place for the provided id.",
@@ -87,7 +87,6 @@ const getPlaces = async (req, res, next) => {
     return next(error);
   }
 
-  console.log(places);
   res.json({
     places: places.map((place) => place.toObject({ getters: true })),
   });
