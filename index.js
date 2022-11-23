@@ -56,10 +56,11 @@ app.use((error, req, res, next) => {
 
 //connect to moongoose
 mongoose
-  .connect(
-    `mongodb+srv://vincentyip:N1SaVVz9Iyv7homf@cluster0.msigqev.mongodb.net/espace?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
-  )
+  .connect(`${process.env.MONGO_URL}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
   .then(() => {
     app.listen(4000);
   })
