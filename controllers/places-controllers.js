@@ -87,6 +87,7 @@ const getPlaces = async (req, res, next) => {
     return next(error);
   }
 
+  console.log(places);
   res.json({
     places: places.map((place) => place.toObject({ getters: true })),
   });

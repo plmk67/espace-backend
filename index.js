@@ -21,7 +21,10 @@ app.use(bodyParser.json());
 
 //cors-policy error handling
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://aesthetic-moxie-c4b0c5.netlify.app"
+  );
 
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -56,11 +59,14 @@ app.use((error, req, res, next) => {
 
 //connect to moongoose
 mongoose
-  .connect(`${process.env.MONGO_URL}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
+  .connect(
+    `mongodb+srv://vincentyip:N1SaVVz9Iyv7homf@cluster0.msigqev.mongodb.net/espace?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    }
+  )
   .then(() => {
     app.listen(4000);
   })
