@@ -55,6 +55,9 @@ app.use((error, req, res, next) => {
 });
 
 //connect to moongoose
+
+const port = process.env.PORT || 5001;
+
 mongoose
   .connect(`${process.env.MONGO_URL}`, {
     useNewUrlParser: true,
@@ -62,7 +65,8 @@ mongoose
     useCreateIndex: true,
   })
   .then(() => {
-    app.listen(4000);
+    app.listen(port);
+    console.log("db connected");
   })
   .catch((err) => {
     console.log(err);
