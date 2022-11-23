@@ -21,7 +21,10 @@ app.use(bodyParser.json());
 
 //cors-policy error handling
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://aesthetic-moxie-c4b0c5.netlify.app"
+  );
 
   res.setHeader(
     "Access-Control-Allow-Headers",
