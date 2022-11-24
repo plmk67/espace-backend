@@ -35,6 +35,7 @@ const createBooking = async (req, res, next) => {
     status,
     title,
     host,
+    imageUrl,
   });
 
   try {

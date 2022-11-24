@@ -14,6 +14,7 @@ const bookingSchema = new Schema({
   status: { type: String, required: true },
   title: { type: String, required: true },
   host: { type: String, required: true },
+  imageUrl: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Booking", bookingSchema, "booking");
