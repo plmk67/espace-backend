@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://aesthetic-moxie-c4b0c5.netlify.app/"
+    "https://aesthetic-moxie-c4b0c5.netlify.app"
   );
 
   res.setHeader(
@@ -70,7 +70,7 @@ mongoose
   })
   .then(() => {
     app.listen(port);
-    console.log(port);
+    console.log;
   })
   .catch((err) => {
     console.log(err);
