@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 
 const placesRoutes = require("./routes/places-routes");
 const userRoutes = require("./routes/user-routes");
-
+const favouriteRoutes = require("./routes/favourite-routes");
 const bookingRoutes = require("./routes/booking-routes");
 
 const HttpError = require("./models/http-error");
@@ -21,7 +21,10 @@ app.use(bodyParser.json());
 
 //cors-policy error handling
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://aesthetic-moxie-c4b0c5.netlify.app/"
+  );
 
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -39,6 +42,7 @@ app.use((req, res, next) => {
 app.use("/api/places", placesRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/favourite", favouriteRoutes);
 
 //error routes
 app.use((req, res, next) => {
@@ -54,7 +58,7 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || "An unknown error occurred!" });
 });
 
-//connect to moongoose
+//connect to mongoose
 
 const port = process.env.PORT || 5001;
 
@@ -66,7 +70,7 @@ mongoose
   })
   .then(() => {
     app.listen(port);
-    console.log("db connected");
+    console.log(port);
   })
   .catch((err) => {
     console.log(err);

@@ -9,6 +9,7 @@ const Place = require("../models/place");
 const jwt = require("jsonwebtoken");
 
 const getUserTrips = async (req, res, next) => {
+  const id = req.params.id;
   try {
     places = await Place.find({
       user: ObjectId(id),
@@ -21,6 +22,8 @@ const getUserTrips = async (req, res, next) => {
     return next(error);
   }
 
+  console.log("hello");
+  console.log(id);
   res.json({
     places: places.map((place) => place.toObject({ getters: true })),
   });

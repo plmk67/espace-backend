@@ -20,6 +20,7 @@ const createBooking = async (req, res, next) => {
     status,
     title,
     host,
+    imageUrl,
   } = req.body;
 
   const newBooking = new Booking({
