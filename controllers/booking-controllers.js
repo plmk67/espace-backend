@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Booking = require("../models/booking");
 const User = require("../models/user");
 const HttpError = require("../models/http-error");
+const ObjectId = require("mongodb").ObjectID;
 
 const { authenticateHeaderToken } = require("../controllers/user-controllers");
 
@@ -58,12 +59,12 @@ const createBooking = async (req, res, next) => {
 const getUserBookings = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-
-  console.log(authHeader);
+  let user_id = req.params.user_id;
 
   let bookings;
+
   try {
-    bookings = await Booking.find();
+    bookings = await Booking.find({ user: ObjectId(user_id) });
   } catch (err) {
     const error = new HttpError(
       "Create new booking failed, please try again later.",
@@ -73,16 +74,16 @@ const getUserBookings = async (req, res, next) => {
     return next(error);
   }
 
+  console.log(bookings);
   res.status(200).json({ bookings: bookings });
 };
 
 const getUserBookingById = async (req, res, next) => {
-  let id = req.params.id;
+  let booking_id = req.params.id;
 
-  console.log(typeof id);
   try {
-    booking = await Booking.find({
-      user: id,
+    booking = await Booking.findOne({
+      _id: ObjectId(booking_id),
     });
   } catch (err) {
     const error = new HttpError(
@@ -100,7 +101,6 @@ const getUserBookingById = async (req, res, next) => {
 const updateUserBookingById = async (req, res, next) => {
   let place_id = req.params.id;
 
-  console.log(place_id);
   try {
     booking = await Booking.findOneAndUpdate(
       {

@@ -6,11 +6,11 @@ const router = express.Router();
 
 router.post("/create", bookingControllers.createBooking);
 router.get(
-  "/trips",
+  "/trips/:user_id",
   userControllers.authenticateHeaderToken,
   bookingControllers.getUserBookings
 );
-router.get("/trips/:id", bookingControllers.getUserBookingById);
+router.get("/trips/detail/:id", bookingControllers.getUserBookingById);
 router.patch("/trips/:id", bookingControllers.updateUserBookingById);
 
 module.exports = router;
