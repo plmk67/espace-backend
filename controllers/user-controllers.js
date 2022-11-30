@@ -2,7 +2,7 @@ const uuid = require("uuid/v4");
 const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 const ObjectId = require("mongodb").ObjectID;
-
+const bcrypt = require("bcrypt");
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
 const Place = require("../models/place");
@@ -22,8 +22,6 @@ const getUserTrips = async (req, res, next) => {
     return next(error);
   }
 
-  console.log("hello");
-  console.log(id);
   res.json({
     places: places.map((place) => place.toObject({ getters: true })),
   });
@@ -42,7 +40,9 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  if (!user || user.password !== password) {
+  const validPassword = await bcrypt.compare(password, user.password);
+
+  if (!user || !validPassword) {
     const error = new HttpError("Please verify login information", 404);
     return next(error);
   }
@@ -68,10 +68,12 @@ const signUp = async (req, res, next) => {
   //check if email has existing users
 
   var id = mongoose.Types.ObjectId();
+  const salt = await bcrypt.genSalt(10);
 
+  let encryptedPassword = await bcrypt.hash(password, salt);
   const newUser = new User({
     email,
-    password,
+    password: encryptedPassword,
     name,
     id,
   });
