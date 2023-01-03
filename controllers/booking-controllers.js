@@ -50,7 +50,7 @@ const createBooking = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(201).json({
+  res.send(201).json({
     bookings: newBooking.toObject({ getters: true }),
   });
 };
@@ -73,7 +73,7 @@ const getUserBookings = async (req, res, next) => {
     );
     return next(error);
   }
-  res.status(200).json({ bookings: bookings });
+  res.send(200).json({ bookings: bookings });
 };
 
 const getUserBookingById = async (req, res, next) => {
