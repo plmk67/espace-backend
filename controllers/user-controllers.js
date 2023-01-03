@@ -80,7 +80,6 @@ const signUp = async (req, res, next) => {
 
   User.exists({ email: email }, (error, existingUser) => {
     if (existingUser === null || existingUser === false) {
-      console.log(existingUser);
       newUser.save();
 
       const accessToken = generateAccessToken({ id });
@@ -124,6 +123,7 @@ const authenticateHeaderToken = async (req, res, next) => {
     ? jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         //verify if token is correct
         if (err) {
+          console.log("error from authentication");
           res.send(403).json({ error: "error" });
         } else {
           next();

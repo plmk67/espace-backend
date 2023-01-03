@@ -70,7 +70,6 @@ mongoose
   })
   .then(() => {
     app.listen(port);
-    console.log;
   })
   .catch((err) => {
     console.log(err);

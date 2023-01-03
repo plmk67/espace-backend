@@ -45,7 +45,6 @@ const createPlace = async (req, res, next) => {
       "Create new space failed, please try again later.",
       500
     );
-    console.log(err);
     return next(error);
   }
 
@@ -86,8 +85,6 @@ const getPlaces = async (req, res, next) => {
     );
     return next(error);
   }
-
-  console.log(places);
 
   res.json({
     places: places.map((place) => place.toObject({ getters: true })),
