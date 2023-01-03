@@ -52,8 +52,16 @@ const login = async (req, res, next) => {
   const accessToken = generateAccessToken({ id });
   const refreshToken = generateRefreshToken({ id });
 
-  res.cookie("token", accessToken);
-  res.cookie("refreshToken", refreshToken);
+  res.cookie("token", accessToken, {
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+  });
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+  });
 
   res.status(201).json({
     email: user.email,
@@ -118,7 +126,6 @@ const logout = async (req, res, next) => {
 const authenticateHeaderToken = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-
   token
     ? jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         //verify if token is correct
