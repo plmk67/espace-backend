@@ -131,6 +131,7 @@ const authenticateHeaderToken = async (req, res, next) => {
         //verify if token is correct
         if (err) {
           console.log("error from authentication");
+          console.log(err);
           res.send(403).json({ error: "error" });
         } else {
           next();
