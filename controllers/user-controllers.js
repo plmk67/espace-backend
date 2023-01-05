@@ -137,12 +137,14 @@ const authenticateHeaderToken = async (req, res, next) => {
 
   console.log(authHeader);
   console.log(token);
+
   token
     ? jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         //verify if token is correct
         if (err) {
           console.log("error from authentication");
-          res.status(403).json({ error: "error" });
+          console.log(err);
+          res.status(403).json({ error: "error", message: err });
         } else {
           next();
         }
