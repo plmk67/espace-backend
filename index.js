@@ -19,6 +19,18 @@ app.use(bearerToken());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
+//set up for Heroku
+app.set("trust proxy", 1);
+
+app.use(
+  session({
+    cookie: {
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // must be 'none' to enable cross-site delivery
+      secure: process.env.NODE_ENV === "production", // must be true if sameSite='none'
+    },
+  })
+);
+
 //cors-policy error handling
 app.use((req, res, next) => {
   res.setHeader(
