@@ -53,12 +53,12 @@ const login = async (req, res, next) => {
   const refreshToken = generateRefreshToken({ id });
 
   res.cookie("token", accessToken, {
-    httpOnly: true,
+    httpOnly: false,
     sameSite: "none",
     secure: true,
   });
   res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
+    httpOnly: false,
     sameSite: "none",
     secure: true,
   });
@@ -93,8 +93,16 @@ const signUp = async (req, res, next) => {
       const accessToken = generateAccessToken({ id });
       const refreshToken = generateRefreshToken({ id });
 
-      res.cookie("token", accessToken);
-      res.cookie("refreshToken", refreshToken);
+      res.cookie("token", accessToken, {
+        httpOnly: false,
+        secure: true,
+        sameSite: "none",
+      });
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: false,
+        secure: true,
+        sameSite: "none",
+      });
 
       res.status(201).json({
         email: newUser.email,
@@ -126,18 +134,18 @@ const logout = async (req, res, next) => {
 const authenticateHeaderToken = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
+
   token
     ? jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         //verify if token is correct
         if (err) {
           console.log("error from authentication");
-          console.log(err);
-          res.send(403).json({ error: "error" });
+          res.status(403).json({ error: "error" });
         } else {
           next();
         }
       })
-    : res.send(401).json({ error: "no token" });
+    : res.status(401).json({ error: "no token" });
 };
 
 function generateAccessToken(id) {

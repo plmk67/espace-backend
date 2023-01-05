@@ -58,22 +58,20 @@ const createBooking = async (req, res, next) => {
 const getUserBookings = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  console.log(token);
-  console.log(authHeader);
+
   let user_id = req.params.user_id;
   let bookings;
 
   try {
     bookings = await Booking.find({ user: ObjectId(user_id) });
   } catch (err) {
-    console.log(err);
     const error = new HttpError(
       "Create new booking failed, please try again later.",
       500
     );
     return next(error);
   }
-  res.send(200).json({ bookings: bookings });
+  res.status(200).json({ bookings: bookings });
 };
 
 const getUserBookingById = async (req, res, next) => {
