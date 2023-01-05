@@ -81,9 +81,7 @@ const getUserBookingById = async (req, res, next) => {
     booking = await Booking.findOne({
       _id: ObjectId(booking_id),
     });
-    console.log(err);
   } catch (err) {
-    console.log(err);
     const error = new HttpError(
       "Cannot find user booking failed, please try again later.",
       500
