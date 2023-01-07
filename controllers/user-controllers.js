@@ -52,21 +52,22 @@ const login = async (req, res, next) => {
   const accessToken = generateAccessToken({ id });
   const refreshToken = generateRefreshToken({ id });
 
-  res.cookie("token", accessToken, {
-    httpOnly: false,
-    sameSite: "none",
-    secure: true,
-  });
-  res.cookie("refreshToken", refreshToken, {
-    httpOnly: false,
-    sameSite: "none",
-    secure: true,
-  });
+  // res.cookie("token", accessToken, {
+  //   httpOnly: false,
+  //   sameSite: "none",
+  //   secure: true,
+  // });
+  // res.cookie("refreshToken", refreshToken, {
+  //   httpOnly: false,
+  //   sameSite: "none",
+  //   secure: true,
+  // });
 
   res.status(201).json({
     email: user.email,
     id: user._id,
     name: user.name,
+    token: accessToken,
   });
 };
 
