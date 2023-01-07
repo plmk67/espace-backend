@@ -94,21 +94,22 @@ const signUp = async (req, res, next) => {
       const accessToken = generateAccessToken({ id });
       const refreshToken = generateRefreshToken({ id });
 
-      res.cookie("token", accessToken, {
-        httpOnly: false,
-        secure: true,
-        sameSite: "none",
-      });
-      res.cookie("refreshToken", refreshToken, {
-        httpOnly: false,
-        secure: true,
-        sameSite: "none",
-      });
+      // res.cookie("token", accessToken, {
+      //   httpOnly: false,
+      //   secure: true,
+      //   sameSite: "none",
+      // });
+      // res.cookie("refreshToken", refreshToken, {
+      //   httpOnly: false,
+      //   secure: true,
+      //   sameSite: "none",
+      // });
 
       res.status(201).json({
         email: newUser.email,
         name: newUser.name,
         id: newUser.id,
+        token: accessToken,
       });
     } else {
       res.status(404).json({ message: "User already exists" });
@@ -135,9 +136,6 @@ const logout = async (req, res, next) => {
 const authenticateHeaderToken = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-
-  console.log(authHeader);
-  console.log(token);
 
   token
     ? jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
