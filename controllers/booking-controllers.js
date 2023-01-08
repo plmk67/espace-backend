@@ -50,7 +50,7 @@ const createBooking = async (req, res, next) => {
     return next(error);
   }
 
-  res.send(201).json({
+  res.status(201).json({
     bookings: newBooking.toObject({ getters: true }),
   });
 };
